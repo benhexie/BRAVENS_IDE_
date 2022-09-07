@@ -1,0 +1,62 @@
+/* EDITOR */
+.editor {
+    background-color: var(--editor-bg);
+    height: 65%;
+    display: flex;
+    justify-content: start;
+    align-items: flex-start;
+    flex-flow: row;
+    margin-bottom: var(--gap);
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row;
+    gap: 0;
+    position: relative;
+}
+#editor-max-line-no {
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    width: auto;
+    background-color: var(--editor-no-color);
+    border: solid 1px var(--editor-no-color);
+    color: gray;
+    word-wrap: break-word;
+    text-align: center;
+    font-size: small;
+    padding-top: 8px;
+    padding-left: 2px;
+    padding-right: 2px;
+    line-height: 15px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+#editor-txt {
+   scroll-snap-type: mandatory;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem;
+    padding-bottom: 0;
+    resize: none;
+    border-left: none;
+    line-height: 15px;
+    z-index: 2;
+    word-wrap: normal;
+}
+#editor-txt:focus {
+    border: solid 2px var(--primary-color);
+    border-left: none;
+    outline: none;
+    padding-top: 7px;
+    padding-left: 6px;
+    
+}
+.editor > div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+#editor-txt:focus + div {
+    border: solid 2px var(--primary-color);
+}

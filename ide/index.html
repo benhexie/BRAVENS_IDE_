@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRAVENS IDE</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/explorer.css">
+    <link rel="stylesheet" href="css/terminal.css">
+</head>
+<body>
+    <header>
+        <div class="editor-title-div">
+            <form method="post" id="title-form">
+                <input type="text" id="editor-title" value="unknown.txt" placeholder="File Name" disabled>
+                <input type="submit" value="" hidden>
+            </form>
+            <img class="fa-solid fa-pen-to-square" id="edit-btn" src="assets/svg/pen-to-square-solid.svg"></img>
+        </div>
+        <div class="header-center">
+            <h1 id="timer">00:00</h1>
+            <i id="views-btn">
+                <div></div>
+                <div></div>
+            </i>
+            <div class="views-div" id="views-div">
+                <div id="editor-only"></div>
+                <div id="editor-and-terminal">
+                    <div></div>
+                    <div></div>
+                </div>
+                <div id="terminal-only"></div>
+                <div></div>
+            </div>
+        </div>
+        <div class="header-btns">
+            <button id="test-btn" class="header-btn btn">TEST</button>
+            <button id="submit-btn" class="header-btn btn">SUBMIT</button>
+        </div>
+    </header>
+    <main>
+        <div class="explorer-menu">
+            <img class="fa-solid fa-plus" id="explorer-show-btn" src="assets/svg/plus-solid.svg">
+            <img src="assets/svg/copy-solid.svg" class="fa-solid fa-copy">
+        </div>
+        <div class="explorer">
+            <div class="explorer-header">
+                <h1 class="explorer-title">EXPLORER</h1>
+                <div class="explorer-icons">
+                    <img src="assets/svg/file-medical-solid.svg" class="fa-solid fa-file-circle-plus" id="add-file-btn">
+                    <div class="explorer-close">
+                        <img src="assets/svg/xmark-solid.svg" class="fa-solid fa-xmark" id="explorer-hide-btn">
+                    </div>
+                </div>
+            </div>
+            <ul class="file-list">
+                <li class="file">
+                    <div class="file-selected"></div>
+                    <h2 class="file-name">
+                        <span class="file-name-txt">
+                            unknown
+                        </span>
+                        <span class="file-dots-txt">
+                            ...
+                        </span>
+                        <span class="file-ext-txt">
+                            .txt
+                        </span>
+                    </h2>
+                </li>
+            </ul>
+        </div>
+        <div class="not-explorer">
+            <div class="editor">
+                <pre id="editor-max-line-no"></pre>
+                <textarea name="editor-txt" id="editor-txt" placeholder="Write code here..." spellcheck="false" autofocus></textarea>
+                <div></div>
+            </div>
+            <div class="terminal">
+                <ul id="terminal-list">
+                    <li>
+                        <textarea name="terminal-title" class="terminal-title" placeholder="BRAVENS CONSOLE" disabled></textarea>
+                        <div>
+                            <label for="terminal-input">
+                                <textarea disabled>BRAVENS:</textarea>
+                                <textarea disabled>~</textarea>
+                                <textarea disabled>$</textarea>
+                            </label>
+                            <form action="" method="post" class="terminal-form">
+                                <input type="text" name="terminal-input" class="terminal-input" spellcheck="false" autocomplete="off">
+                                <input type="submit" hidden>
+                            </form>
+                        </div>
+                        <textarea name="error-msg" class="error-msg" disabled></textarea>
+                        <textarea name="terminal-output" class="terminal-output" disabled></textarea>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="scripts/app.js"></script>
+    <script src="scripts/terminal.js"></script>
+    <script src="scripts/editor.js"></script>
+    <script src="scripts/explorer.js"></script>
+    <!-- <script src="https://kit.fontawesome.com/c6c66d7758.js" crossorigin="anonymous"></script> -->
+</body>
+</html>

@@ -1,0 +1,106 @@
+/* EXPLORER */
+.explorer-menu {
+    width: 5%;
+    max-width: 21px;
+    background-color: var(--explorer-menu-bg);
+    display: none;
+    flex-flow: column;
+    align-items: center;
+    padding-top: 0.5rem;
+    gap: var(--gap);
+}
+.explorer-menu > .fa-solid {
+    color: var(--icon-color-3);
+}
+.fa-plus {
+    /* display: none !important; */
+}
+.fa-plus:hover {
+    border-radius: 5px;
+    background-color: var(--edit-icon-hover-color-4);
+    /* color: var(--edit-icon-hover-color-4); */
+}
+.fa-copy {
+    display: none !important;
+}
+.explorer {
+    width: 30%;
+    min-width: 200px;
+    height: 100%;
+    background-color: var(--explorer-bg);
+    overflow-y: auto;
+}
+.explorer-header {
+    padding: 0.5rem;
+    padding-bottom: 0;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+.explorer .explorer-icons {
+    display: flex;
+    flex-flow: row;
+    gap: 5px;
+    position: relative;
+}
+.explorer .explorer-close {
+    position: relative;
+}
+.fa-xmark:hover {
+    border-radius: 5px;
+    background-color: var(--edit-icon-hover-color-2);
+    /* color: var(--edit-icon-hover-color-2); */
+}
+.fa-file-circle-plus:hover {
+    color: var(--edit-icon-hover-color-3);
+}
+.explorer-title {
+    font-size: small;
+    font-weight: normal;
+    color: var(--explorer-txt);
+}
+.file-list {
+    list-style: none;
+    padding: 0.5rem;
+    padding-left: 0;
+    display: flex;
+    flex-flow: column;
+    gap: 0.5rem;
+}
+.file {
+    width: 100%;
+    height: 2rem;
+    border-radius: 20px;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    background-color: var(--explorer-file-bg);
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    gap: var(--gap);
+    position: relative;
+}
+.file-selected {
+    width: 10px;
+    height: 100%;
+    background-color: var(--explorer-menu-bg);
+    display: inline;
+    position: absolute;
+}
+.file-name {
+    margin: 0.5rem;
+    margin-left: 1rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: normal;
+    font-size: small;
+    vertical-align: center;
+    max-lines: 1;
+}
+.file-name > span:nth-child(2) {
+    font-weight: bold;
+    display: none;
+}
+.file-name > span:nth-child(3) {
+    color: var(--extention-color);
+}
