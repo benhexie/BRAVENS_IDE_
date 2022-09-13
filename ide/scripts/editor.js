@@ -3,7 +3,7 @@ const editorTxt = document.getElementById("editor-txt");
 const editorTitle = document.getElementById("editor-title");
 
 let nLinesMax = 1;
-const lineNoArr = ["1\n"];
+let lineNoArr = ["1\n"];
 editorMaxNo.textContent = lineNoArr.toString();
 
 /*
@@ -11,10 +11,12 @@ editorMaxNo.textContent = lineNoArr.toString();
  */
 editorTxt.addEventListener('input', e =>{
     const nLines = editorTxt.value.split("\n").length;
-    
     if(nLinesMax < nLines) {
-        lineNoArr.push(++nLinesMax + "\n");
-        editorMaxNo.textContent = lineNoArr.join("");
+        const nl = nLines - nLinesMax;
+        for (let i = 0; i < nl; i++) {
+            lineNoArr.push(++nLinesMax + "\n");
+            editorMaxNo.textContent = lineNoArr.join("");
+        }
     }
     else if(nLinesMax > nLines) {
         const nl = nLinesMax - nLines;
@@ -112,7 +114,6 @@ editorTxt.addEventListener('keydown', e =>{
                     }
                     break;
                 }
-
             }
 
             for (let i = 0; i < nTabs; i++) {
@@ -123,7 +124,7 @@ editorTxt.addEventListener('keydown', e =>{
                 e.preventDefault();
                 if (a !== ':') {
                     editorTxt.value = editorTxt.value.substring(0, start) + '\n' + sTabs + '    \n' + sTabs + 
-                        editorTxt.value.substring(end - 1, editorTxt.value.length);
+                     editorTxt.value.substring(end - 1, editorTxt.value.length);
                     for (let i = 0; i < 2; i++) {
                         lineNoArr.push(++nLinesMax + "\n");
                         editorMaxNo.textContent = lineNoArr.join("");
@@ -131,12 +132,12 @@ editorTxt.addEventListener('keydown', e =>{
                 } else {
                     if (editorTxt.value.length - cursorPos !== 0) {
                         editorTxt.value = editorTxt.value.substring(0, start) + '\n    ' + sTabs + 
-                            editorTxt.value.substring(end - 1, editorTxt.value.length);
+                         editorTxt.value.substring(end - 1, editorTxt.value.length);
                         lineNoArr.push(++nLinesMax + "\n");
                         editorMaxNo.textContent = lineNoArr.join("");
                     } else {
                         editorTxt.value = editorTxt.value.substring(0, start) + '\n    ' + sTabs +
-                            editorTxt.value.substring(end, editorTxt.value.length);
+                         editorTxt.value.substring(end, editorTxt.value.length);
                         lineNoArr.push(++nLinesMax + "\n");
                         editorMaxNo.textContent = lineNoArr.join("");
                     }
@@ -163,6 +164,7 @@ editorTxt.addEventListener('keydown', e =>{
             break;
     
         default:
+            fileContent[nfileSelected]["filecontent"] = editorTxt.value;
             break;
     }
 });

@@ -7,12 +7,31 @@ const fileBtn = document.getElementsByClassName("file");
 const fileSelected = document.getElementsByClassName("file-selected");
 const explorerFileName = document.getElementsByClassName("file-name-txt");
 const explorerFileExt = document.getElementsByClassName("file-ext-txt");
+
+// COLORS
+const edit_icon_hover_color_3 = "#1b1b1b";
+const views_bg = "#721d1d";
+const icon_color = "#333333";
+
 const fileList = [];
 let newFileBool = false;
 let nExplorer = 0;
+let fileContent = [];
+let nfileSelected = 0;
+
+const fileStructure = {
+    filename: '',
+    fileext: '',
+    filecontent: ''
+};
+
+fileStructure.filename = `${explorerFileName[0].textContent.trim()}`;
+fileStructure.fileext = `${explorerFileExt[0].textContent.trim().substring(1, explorerFileExt[0].textContent.trim().length)}`;
+fileContent.push(fileStructure);
+fileSelected[0].style.backgroundColor = "green";
 
 /*
- * Creates list of files and controls functionality
+ * To create new files
  */
 let previousFile;
 addFileBtn.addEventListener('click', e => {
@@ -20,9 +39,12 @@ addFileBtn.addEventListener('click', e => {
     editorTitle.value = '';
     editorTitle.disabled = false;
     editorTitle.focus();
-    newFileBool = true;
+    newFileBool = true; // tells the application that you're trying to create a new file
 });
 
+/*
+ * Creating new files and editing the title of existing files
+ */
 titleEditBtn.addEventListener('click', e => {
     if (editorTitle.disabled) {
         editorTitle.disabled = false;
@@ -34,6 +56,7 @@ titleEditBtn.addEventListener('click', e => {
         if (newFileBool) {
             if (fileObj.err === 0) {
                 addFileFtn(fileObj);
+                editorMaxNo.textContent = '1\n';
             }
             else {
                 editorTitle.value = `${explorerFileName[nExplorer].textContent.trim()}${explorerFileExt[nExplorer].textContent.trim()}`;
@@ -43,7 +66,6 @@ titleEditBtn.addEventListener('click', e => {
                 editorTitle.value = `${explorerFileName[nExplorer].textContent.trim()}${explorerFileExt[nExplorer].textContent.trim()}`;
             }
             else {
-                console.log(nExplorer);
                 explorerFileName[nExplorer].textContent = fileObj.fn;
                 explorerFileExt[nExplorer].textContent = `.${fileObj.ext}`;
             }
@@ -51,6 +73,7 @@ titleEditBtn.addEventListener('click', e => {
         newFileBool = false;
         window.getSelection().collapseToStart();
         editorTitle.disabled = true;
+        editorTxt.focus();
     } 
 });
 titleForm.addEventListener('submit', e => {
@@ -59,19 +82,23 @@ titleForm.addEventListener('submit', e => {
     if (newFileBool) {
         if (fileObj.err === 0) {
             addFileFtn(fileObj);
+            editorMaxNo.textContent = '1\n';
         } 
     } else {
         if (fileObj.err !== 0) {
             editorTitle.value = `${explorerFileName[nExplorer].textContent.trim()}${explorerFileExt[nExplorer].textContent.trim()}`;
         }
         else {
-            explorerFileName[nExplorer].textContent = fileObj.fn;
-            explorerFileExt[nExplorer].textContent = `.${fileObj.ext}`;
+            explorerFileName[nfileSelected].textContent = fileObj.fn;
+            explorerFileExt[nfileSelected].textContent = `.${fileObj.ext}`;
+            fileContent[nfileSelected].filename = fileObj.fn;
+            fileContent[nfileSelected].fileext = fileObj.ext;
         }
     }
     newFileBool = false;
     window.getSelection().collapseToStart();
     editorTitle.disabled = true;
+    editorTxt.focus();
 });
 
 const addFileFtn = fileObj => {
@@ -90,11 +117,54 @@ const addFileFtn = fileObj => {
             </span>
         </h2>
     </li>`);
+    fileContent.push({  // Stores the file title
+        filename: `${fileObj.fn}`,
+        fileext: `${fileObj.ext}`
+    });
+    editorTxt.value = '';
+    nLinesMax = 1;
+    lineNoArr = ["1\n"];
+    editorMaxNo.textContent = '1\n';
     nExplorer++;
+    fileSelected[nExplorer].style.backgroundColor = "green";
+    nfileSelected = nExplorer;
+    for (let j = 0; j < Array.from(fileBtn).length; j++) {
+        if (j !== nExplorer) {
+            fileSelected[j].style.backgroundColor = "rgb(163, 163, 163)";
+        }
+    }
+    listClickFtn();
 }
-fileListElm.addEventListener('click', elm => {
-    
-});
+
+/*
+ * Controls file click  functionality
+ */
+const listClickFtn = () => {
+    Array.from(fileBtn).forEach((e, i) => {
+        e.addEventListener('click', () => {
+            fileContent[nfileSelected]["filecontent"] = editorTxt.value;
+            fileSelected[i].style.backgroundColor = "green";
+            for (let j = 0; j < Array.from(fileBtn).length; j++) {
+                if (j !== i) {
+                    fileSelected[j].style.backgroundColor = "rgb(163, 163, 163)";
+                }
+            }
+            nfileSelected = i;
+            editorTitle.value = `${fileContent[i]["filename"]}.${fileContent[i]["fileext"]}`;
+            editorTxt.value = fileContent[i]["filecontent"] ? fileContent[i]["filecontent"] : '';
+
+            const nLines = editorTxt.value.split("\n").length;
+            nLinesMax = 0;
+            lineNoArr = [];
+            for (let j = 0; j < nLines; j++) {
+                lineNoArr.push(++nLinesMax + "\n");
+            }
+            editorMaxNo.textContent = lineNoArr.join("");
+            editorTxt.focus();
+        });
+    });
+}
+listClickFtn();
 
 /*
  * Show and hide file explorer
@@ -118,14 +188,14 @@ viewsBtn.addEventListener('click', () =>{
         viewsDiv.style.display = "flex";
         const viewBtnDivs = document.querySelectorAll("#views-btn > div");
         Array.from(viewBtnDivs).forEach(element => {
-            element.style.backgroundColor = "#721d1d";
+            element.style.backgroundColor = views_bg;
         });
         viewsBtnClicked = 1;
     } else {
         viewsDiv.style.display = "none";
         const viewBtnDivs = document.querySelectorAll("#views-btn > div");
         Array.from(viewBtnDivs).forEach(element => {
-            element.style.backgroundColor = "#1b1b1b";
+            element.style.backgroundColor = edit_icon_hover_color_3;
         });
         viewsBtnClicked = 0;
     }
@@ -135,19 +205,19 @@ viewsBtn.addEventListener('mouseover', () =>{
     if (viewsBtnClicked === 1) {
         // red
         Array.from(viewBtnDivs).forEach(element => {
-            element.style.backgroundColor = "#721d1d";
+            element.style.backgroundColor = views_bg;
         });
     } else {
         // black
         Array.from(viewBtnDivs).forEach(element => {
-            element.style.backgroundColor = "#1b1b1b";
+            element.style.backgroundColor = edit_icon_hover_color_3;
         });
     }
 });
 viewsBtn.addEventListener('mouseleave', () =>{
     const viewBtnDivs = document.querySelectorAll("#views-btn > div");
     Array.from(viewBtnDivs).forEach(element => {
-        element.style.backgroundColor = "#333333";
+        element.style.backgroundColor = icon_color;
     });
 });
 
